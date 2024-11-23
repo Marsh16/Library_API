@@ -166,7 +166,6 @@ func ReadAllBook()(Response, error){
 
 func ReadBookByBookId(id string)(Response, error){
 	var obj Book
-	var arrObj []Book
 	var res Response
 	con:= db.CreateCon()
 
@@ -183,11 +182,10 @@ func ReadBookByBookId(id string)(Response, error){
 		if err != nil{
 			return res,err
 		}
-		arrObj = append(arrObj, obj)
 	}
 	res.Status = http.StatusOK
 	res.Message="Success"
-	res.Data = arrObj
+	res.Data = obj
 
 	return res, nil
 }
