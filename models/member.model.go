@@ -54,7 +54,7 @@ func CreateMember(name string, phone_number string, email string, birthday strin
 		return res, err
 	}
 
-	result, err := stmt.Exec(name)
+	result, err := stmt.Exec(name, phone_number, email, birthday, no_ktp)
 
 	if err != nil {
 		return res, err
@@ -112,7 +112,7 @@ func EditMember(id string, name string, phone_number string, email string, birth
 		return res, err
 	}
 
-	result, err := stmt.Exec(name, id)
+	result, err := stmt.Exec(name, phone_number, email, birthday, no_ktp, id)
 
 	if err != nil {
 		return res, err
@@ -133,8 +133,8 @@ func EditMember(id string, name string, phone_number string, email string, birth
 }
 
 func ReadAllMember()(Response, error){
-	var obj Category
-	var arrObj []Category
+	var obj Member
+	var arrObj []Member
 	var res Response
 
 	con:= db.CreateCon()
@@ -148,7 +148,7 @@ func ReadAllMember()(Response, error){
 	}
  
 	for rows.Next(){
-		err = rows.Scan(&obj.Id, &obj.Name)
+		err = rows.Scan(&obj.Id, &obj.Name,&obj.Phone_Number,&obj.Email, &obj.Birthday,&obj.No_Ktp)
 
 		if err != nil{
 			return res,err
