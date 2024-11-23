@@ -1,12 +1,14 @@
 package controllers
 
 import (
-	"github.com/labstack/echo/v4"
-	"net/http"
 	"io"
-	"mime/multipart"
-	"os"
+	"library_api/helpers"
 	"library_api/models"
+	"mime/multipart"
+	"net/http"
+	"os"
+
+	"github.com/labstack/echo/v4"
 )
 
 func ReadBookByBookId(c echo.Context) error {
@@ -77,7 +79,7 @@ func EditBook(c echo.Context) error {
 		})
 	}
 
-	baseURL := "http://127.0.0.1:8080"
+	baseURL := "http://" + helpers.GetBaseURL()
 	pictureURL := baseURL + "/images/" + cover_image.Filename
 
 	result, err := models.EditBook(id, title, synopsis, pictureURL, author, publish_date, member_id)
@@ -111,8 +113,7 @@ func CreateBook(c echo.Context) error {
 			Message: "An internal server error occurred when saving the image. Please try again in a few moments!",
 		})
 	}
-
-	baseURL := "http://127.0.0.1:8080"
+	baseURL := "http://" + helpers.GetBaseURL()
 	pictureURL := baseURL + "/images/" + cover_image.Filename
 
 	result, err := models.CreateBook(title, synopsis, pictureURL, author, publish_date, member_id)

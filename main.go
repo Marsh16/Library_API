@@ -1,5 +1,6 @@
 package main
-// go mod init vp_week11_echo 
+
+// go mod init vp_week11_echo
 // GO111MODULE=on go get github.com/labstack/echo/v4
 // go get github.com/tkanos/gonfig
 // go get -u github.com/go-sql-driver/mysql
@@ -8,12 +9,14 @@ package main
 //go get github.com/labstack/echo/v4/middleware
 //go get github.com/go-playground/validator
 import (
-	"library_api/routes"
 	"library_api/db"
+	"library_api/helpers"
+	"library_api/routes"
 )
 
 func main() {
 	db.Init()
 	e := routes.Init()
-	e.Logger.Fatal(e.Start("127.0.0.1:8080"))
+	baseURL := helpers.GetBaseURL()
+	e.Logger.Fatal(e.Start(baseURL))
 }
