@@ -18,7 +18,35 @@ func ReadBookByCategoryId(id string)(Response, error){
 	var res Response
 	con:= db.CreateCon()
 
-	sqlStatement := "SELECT * from book_category where id= "+id
+	sqlStatement := "SELECT * from book_category where category_id= "+id
+	rows, err := con.Query(sqlStatement)
+	defer rows.Close()
+
+	if err != nil{
+		return res,err
+	}
+	for rows.Next(){
+		err = rows.Scan(&obj.Id, &obj.Book_Id, &obj.Category_Id)
+
+		if err != nil{
+			return res,err
+		}
+		arrObj = append(arrObj, obj)
+	}
+	res.Status = http.StatusOK
+	res.Message="Success"
+	res.Data = arrObj
+
+	return res, nil
+}
+
+func ReadCategoryByBookId(id string)(Response, error){
+	var obj BookCategory
+	var arrObj []BookCategory
+	var res Response
+	con:= db.CreateCon()
+
+	sqlStatement := "SELECT * from book_category where book_id= "+id
 	rows, err := con.Query(sqlStatement)
 	defer rows.Close()
 

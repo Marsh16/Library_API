@@ -33,6 +33,7 @@ func Init() *echo.Echo {
 
 	//Member
 	e.GET("/getBookByCategoryId", controllers.ReadBookByCategoryId)
+	e.GET("/getCategoryByBookId", controllers.ReadCategoryByBookId)
 	e.POST("/createBookCategory", controllers.CreateBookCategory)
 	e.DELETE("/deleteBookCategory", controllers.DeleteBookCategory)
 
