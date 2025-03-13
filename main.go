@@ -8,15 +8,26 @@ package main
 //go get github.com/dgrijalva/jwt-go
 //go get github.com/labstack/echo/v4/middleware
 //go get github.com/go-playground/validator
+//go get github.com/joho/godotenv
+
 import (
 	"library_api/db"
-	"library_api/helpers"
 	"library_api/routes"
+	"github.com/joho/godotenv"
+	"log"
+	"os"
 )
 
 func main() {
 	db.Init()
 	e := routes.Init()
-	baseURL := helpers.GetBaseURL()
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	  }
+	baseURL := os.Getenv("BASE_URL")
+	if baseURL == "" {
+		e.Logger.Fatal("BASE_URL config is required")
+	}
 	e.Logger.Fatal(e.Start(baseURL))
 }

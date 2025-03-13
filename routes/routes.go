@@ -38,6 +38,5 @@ func Init() *echo.Echo {
 	e.DELETE("/deleteBookCategory", controllers.DeleteBookCategory)
 
 	return e
-
 }
 
